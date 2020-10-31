@@ -1,4 +1,4 @@
 # geon
 Web Geometry Toolbox
 
-![image](/doc/screenshots/Capture1.png)
+![image](/doc/screenshots/Capture1.PNG)
