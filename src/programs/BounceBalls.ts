@@ -1,9 +1,8 @@
-import { Renderer2D } from "./2D/Renderer2D";
-import { Geon } from "./Geon";
-import { Program } from "./geon/Program";
-import { Vector2 } from "./math/Vector2";
+import { Geon } from "../Geon";
+import { Program } from "./Program";
+import { Vector2 } from "../math/Vector2";
 
-export class Test extends Program
+export class BounceBallsProgram extends Program
 {
     points: Vector2[] = [];
     vectors: Vector2[] = [];

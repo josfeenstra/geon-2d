@@ -39,6 +39,11 @@ export class Vector2
 		)
 	}
 
+	static fromCopy(other: Vector2) : Vector2
+	{
+		return this.zero().copy(other);	
+	}
+
 	static zero() { return new Vector2(0, 0); }
 
 	// --- basics
@@ -62,7 +67,7 @@ export class Vector2
 
     clone() : Vector2
     {
-        return this.constructor(this.x, this.y);
+        return new Vector2(this.x, this.y);
     }
 
     copy(v: Vector2) : Vector2

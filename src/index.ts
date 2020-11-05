@@ -1,6 +1,20 @@
 import { Geon } from "./Geon";
-import { Test } from "./Test";
+
+import { SelectorMetaProgram } from "./programs/Selector";
+
+import { BounceBallsProgram } from "./programs/BounceBalls";
+import { VoronoiProgram } from "./programs/Voronoi";
+
+const programs: any[] = 
+[
+    BounceBallsProgram,
+    VoronoiProgram
+];
+const meta = new SelectorMetaProgram(programs);
 
 const canvas = document.getElementById("canvas")! as HTMLCanvasElement;
 const geon = new Geon(canvas);
-geon.load(new Test());
+geon.loadMeta(meta);             // program selector
+geon.load(new VoronoiProgram()); // first program to load 
+
+
