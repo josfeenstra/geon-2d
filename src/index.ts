@@ -3,7 +3,7 @@ import { Geon } from "./Geon";
 import { SelectorMetaProgram } from "./programs/Selector";
 
 import { BounceBallsProgram } from "./programs/BounceBalls";
-import { VoronoiProgram } from "./programs/Voronoi";
+import { VoronoiProgram } from "./programs/voronoiProgram";
 
 const programs: any[] = 
 [

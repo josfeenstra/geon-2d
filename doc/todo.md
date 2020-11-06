@@ -1,8 +1,10 @@
 ### big todo
 
 1. voronoi program 
-2. hilbert program
-3. figure out if we want to use assemblyScript
+2. hilbert program 
+
+3. figure out if we want to use assemblyScript -> not yet
+
 3. moving camera around in 2D - DONE (but not generalized)
 4. moving camera around in 3D
 
@@ -11,4 +13,4 @@
 - Key input                     - DONE
 - Sort of camera movement       - DONE
 - Swapping of scenes / programs - DONE + with a nice transition :)
-- incorporate voronoi script    - ...
+- incorporate voronoi script    - busy...

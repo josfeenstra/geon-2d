@@ -3,6 +3,8 @@
 // note: recycle the class as much as possble, building a new class is expensive,
 // especially in javascript
 
+import { Vector2 } from "./Vector2";
+
 export class Vector3
 {
     // #region constructors
@@ -86,6 +88,10 @@ export class Vector3
         this.y = v.y;
         this.z = v.z;
         return this;
+    }
+
+	to2D(): Vector2 {
+        return new Vector2(this.x, this.y);
     }
 
     // #endregion

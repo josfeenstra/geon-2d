@@ -13,7 +13,7 @@ export class Vector2
         this.y = y;
     }
 
-	// --- 'factories'
+	// --- factories & other statics
 
 	static fromLerp( v1:Vector2, v2:Vector2, alpha:number ) : Vector2 
 	{
@@ -46,6 +46,38 @@ export class Vector2
 
 	static zero() { return new Vector2(0, 0); }
 
+
+	static fromCircumcenter(a: Vector2, b: Vector2, c: Vector2) : Vector2
+    {
+        const asum = a.squareSum();
+        const bsum = b.squareSum();
+        const csum = c.squareSum();
+
+        // sort of cross product
+        let d = 2 * (a.x * (b.y - c.y) +
+                     b.x * (c.y - a.y) + 
+                     c.x * (a.y - b.y));
+
+        // if this triangle has no circumcenter? 
+        if (d < 0.00001)
+            d = 1; 
+
+        let x = (asum * (b.y - c.y) + bsum * (c.y - a.y) + csum * (a.y - b.y)) / d;
+        let y = (asum * (b.x - c.x) + bsum * (c.x - a.x) + csum * (a.x - b.x)) / d;
+
+        return new Vector2(x,y);
+    }
+
+	static getSign(a:Vector2, b:Vector2 , c:Vector2) : number
+	{
+		// test half plane relationship
+		// <0 : point on first half
+		// 0  : points collinear
+		// >0 : point on second half 
+		return (a.x - c.x) * (b.y - c.y) - 
+		       (b.x - c.x) * (a.y - c.y);
+	}
+
 	// --- basics
 
 	set(x:number, y:number) : Vector2
@@ -53,6 +85,12 @@ export class Vector2
 		this.x = x;
 		this.y = y;
 		return this 		
+	}
+
+	roughlyEquals(v: Vector2, tol:number) : boolean
+	{
+		return (Math.abs(this.x - v.x) < tol && 
+				Math.abs(this.y - v.y) < tol)
 	}
 
 	equals(v:Vector2) : boolean

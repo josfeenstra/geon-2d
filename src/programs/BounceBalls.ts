@@ -65,7 +65,7 @@ export class BounceBallsProgram extends Program
     }
 
     draw(geon: Geon)
-    {
+    { 
         this.points.forEach(p => geon.r.point(p.x, p.y));
 
         // draw at mouse position;
