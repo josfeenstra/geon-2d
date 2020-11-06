@@ -15,6 +15,7 @@ export class Renderer2
     private geon: Geon;
 
     // visuals
+    public slowfade = false;
     private pointsize = 5;
     private pointcolor = "#ffffff";
 
@@ -33,6 +34,7 @@ export class Renderer2
 
     public reset()
     {
+        this.slowfade = false;
         this.offset = Vector2.zero();
         this.scale = 1;
         this.ctx.fillStyle = this.pointcolor;
@@ -68,7 +70,10 @@ export class Renderer2
 
     clear()
     {
-        this.ctx.clearRect(0, 0, this.geon.width, this.geon.height);
+        if (this.slowfade)
+            this.clearFade(0.1);
+        else
+            this.ctx.clearRect(0, 0, this.geon.width, this.geon.height);
     }
 
     point(x: number, y: number)

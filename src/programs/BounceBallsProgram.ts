@@ -11,9 +11,11 @@ export class BounceBallsProgram extends Program
     speed = 2;
 
     title = 'bounce_balls';
+    description = "press v to turn trails off";
 
     start(geon: Geon)
     {
+        geon.r.slowfade = true;
         this.points = new Array(this.count);
         this.vectors = new Array(this.count);
         for (let i = 0 ; i < this.count; i++)
@@ -63,6 +65,12 @@ export class BounceBallsProgram extends Program
                 this.points.push(Vector2.fromRandom().mul(geon.bounds));
                 this.vectors.push(Vector2.fromRandom().sub(new Vector2(0.5, 0.5)).normalize());
             }    
+        }
+
+        if (geon.IsKeyPressed('v'))
+        {
+            console.log("tab");
+            geon.r.slowfade = !geon.r.slowfade; 
         }
     }
 

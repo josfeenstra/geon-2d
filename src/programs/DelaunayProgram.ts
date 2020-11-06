@@ -13,7 +13,7 @@ export class DelaunayProgram extends Program
     dt: Delaunay = new Delaunay();
     p: Vector2[] = [];
 
-    // overrides 
+    // overrides
     title = 'delaunay';
     description = `use ${this.SWITCH_KEY} to change visuals`;
 
