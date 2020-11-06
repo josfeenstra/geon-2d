@@ -3,9 +3,9 @@
 1. voronoi program 
 2. hilbert program 
 
-3. figure out if we want to use assemblyScript -> not yet
+3. figure out if we want to use assemblyScript DONE -> not yet 
 
-3. moving camera around in 2D - DONE (but not generalized)
+3. moving camera around in 2D -(but not generalized)
 4. moving camera around in 3D
 
 ### small TODO

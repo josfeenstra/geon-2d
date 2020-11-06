@@ -8,6 +8,9 @@ import { Vector2 } from "../math/Vector2";
 // do all the camera work in here
 export class Renderer2
 {
+    public offset = Vector2.zero();
+    public scale = 1;
+
     private ctx: CanvasRenderingContext2D;
     private geon: Geon;
 
@@ -24,6 +27,16 @@ export class Renderer2
         this.ctx = canvas.getContext("2d")!;
         this.ctx.fillStyle = this.pointcolor;
         this.ctx.strokeStyle = this.linecolor;
+    }
+
+    private applyOffset(v: Vector2) : Vector2
+    {
+        return v.clone().add(this.offset).scale(this.scale);
+    }
+
+    public revertOffset(v: Vector2) : Vector2
+    {
+        return v.clone().scale(1 / this.scale).sub(this.offset);
     }
 
     // this clears with a transparant layer, for easy delayed effect
@@ -62,7 +75,8 @@ export class Renderer2
         for (let i = 0; i < points.length; i++)
         {
             this.ctx.beginPath();
-            this.ctx.arc(points[i].x, points[i].y, this.pointsize, 0, Math.PI * 2, false);
+            let v = this.applyOffset(points[i]);
+            this.ctx.arc(v.x, v.y, this.pointsize, 0, Math.PI * 2, false);
             this.ctx.fill();
         }    
     }
@@ -83,8 +97,10 @@ export class Renderer2
         for(let i = 0 ; i < vertices.length; i += 2)
         {
             let ii = i + 1;
-            this.ctx.moveTo(vertices[i].x, vertices[i].y);
-            this.ctx.lineTo(vertices[ii].x, vertices[ii].y);
+            let v1 = this.applyOffset(vertices[i]);
+            let v2 = this.applyOffset(vertices[ii]);
+            this.ctx.moveTo(v1.x, v1.y);
+            this.ctx.lineTo(v2.x, v2.y);
         }
         this.ctx.stroke();
     }

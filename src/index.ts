@@ -18,3 +18,4 @@ geon.loadMeta(meta);             // program selector
 geon.load(new VoronoiProgram()); // first program to load 
 
 
+console.log("everything loaded.");

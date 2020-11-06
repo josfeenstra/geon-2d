@@ -47,6 +47,8 @@ export class Vector2
 	static zero() { return new Vector2(0, 0); }
 
 
+	static NaN() { return new Vector2(NaN, NaN); }
+
 	static fromCircumcenter(a: Vector2, b: Vector2, c: Vector2) : Vector2
     {
         const asum = a.squareSum();
@@ -59,8 +61,8 @@ export class Vector2
                      c.x * (a.y - b.y));
 
         // if this triangle has no circumcenter? 
-        if (d < 0.00001)
-            d = 1; 
+        if (d < 0.000001)
+			return Vector2.NaN(); 
 
         let x = (asum * (b.y - c.y) + bsum * (c.y - a.y) + csum * (a.y - b.y)) / d;
         let y = (asum * (b.x - c.x) + bsum * (c.x - a.x) + csum * (a.x - b.x)) / d;

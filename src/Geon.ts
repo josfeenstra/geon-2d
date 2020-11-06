@@ -60,11 +60,11 @@ export class Geon
         canvas.onmousedown = this.setMouseDown.bind(this);
         canvas.onmouseup = this.setMouseUp.bind(this);
         canvas.oncontextmenu = function(e) { 
-            e.preventDefault(); e.stopPropagation(); // no menu
+            e.preventDefault(); 
+            e.stopPropagation();
         }
 
         // keyboard
-        canvas.setAttribute("tabindex", '0');
         canvas.onkeydown = this.onKeyDown.bind(this);
         canvas.onkeypress = this.onKeyPressed.bind(this);
         canvas.onkeyup = this.onKeyUp.bind(this);
@@ -73,6 +73,8 @@ export class Geon
         {
             this.keysDown[i] = false;
         }
+
+        canvas.focus();
     }
 
     // ...
@@ -100,6 +102,25 @@ export class Geon
     public IsKeyPressed(key: string) : boolean
     {
         return this.keysPressed.includes(key);
+    }
+
+
+    public onKeyDown(e: KeyboardEvent)
+    { 
+        if (this.keysDown[e.key] == true) return;
+        console.log(e.key);
+        this.keysDown[e.key.toLowerCase()] = true;
+        this.keysPressed.push(e.key);
+    }
+
+    public onKeyUp(e: KeyboardEvent)
+    {
+        this.keysDown[e.key.toLowerCase()] = false;
+    }
+
+    public onKeyPressed(e: KeyboardEvent)
+    {
+
     }
 
     // ...
@@ -144,7 +165,8 @@ export class Geon
 
     private setMousePos(e: MouseEvent)
     {
-        this.mouse = new Vector2(e.clientX, e.clientY);
+        // this is a bit messy, BUT, multiply by camera parameters
+        this.mouse = this.r.revertOffset(new Vector2(e.clientX, e.clientY))
     }
 
     private setMouseUp(e: MouseEvent)
@@ -166,6 +188,8 @@ export class Geon
 
     private setMouseDown(e: MouseEvent)
     {
+        e.preventDefault();
+        e.stopPropagation();
         let code = e.buttons;
         if (code >= 4) 
         {
@@ -181,25 +205,8 @@ export class Geon
         {
             code -= 1;
             this.mouseLeftDown = true;
-        }       
-    }
-
-    private onKeyDown(e: KeyboardEvent)
-    { 
-        if (this.keysDown[e.key] == true) return;
-        console.log(e.key);
-        this.keysDown[e.key.toLowerCase()] = true;
-        this.keysPressed.push(e.key);
-    }
-
-    private onKeyUp(e: KeyboardEvent)
-    {
-        this.keysDown[e.key.toLowerCase()] = false;
-    }
-
-    private onKeyPressed(e: KeyboardEvent)
-    {
-
+        }  
+        return false;     
     }
 
     private setWindow()
@@ -221,21 +228,3 @@ export interface IKeys
 {
     [key: string] : boolean
 }
-
-// export enum Key
-// {
-//     keyleft = 37,
-//     keyup = 38,
-//     keyright = 39,
-//     keydown = 40,
-//     key0 = 48,
-//     key1 = 49,
-//     key2 = 50,
-//     key3 = 51,
-//     key4 = 52,
-//     key5 = 53,
-//     key6 = 54,
-//     key7 = 55,
-//     key8 = 56,
-//     key9 = 57,
-// }

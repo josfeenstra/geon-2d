@@ -3,7 +3,7 @@ import { Program } from "./Program";
 
 import { Vector2 } from "../math/Vector2";
 import { Line2 } from "../geo2/line2";
-import { Delaunay } from "../2D/Delaunay";
+import { Delaunay } from "../geo2/Delaunay";
 import { ProgramHelpers } from "./ProgramHelpers";
 
 export class VoronoiProgram extends Program
@@ -31,8 +31,13 @@ export class VoronoiProgram extends Program
                 this.switch = 0;   
         }
 
-        // move all vectors
-        let vel = ProgramHelpers.getMovementVector(geon, 2, 5);
+        // update camera
+        let vel = ProgramHelpers.getMovementVector(geon, 2 / geon.r.scale, 5 / geon.r.scale);
+        geon.r.offset.add(vel);
+        if (geon.IsKeyPressed('q'))
+            geon.r.scale *= 1.5;
+        if (geon.IsKeyPressed('e'))
+            geon.r.scale *= 0.5;
     }
 
     draw(geon: Geon)
