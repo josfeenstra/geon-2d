@@ -8,9 +8,15 @@ import { ProgramHelpers } from "./ProgramHelpers";
 
 export class DelaunayProgram extends Program
 {
+    SWITCH_KEY = 'v';
     switch = 0;
     dt: Delaunay = new Delaunay();
     p: Vector2[] = [];
+
+    // overrides 
+    title = 'delaunay';
+    description = `use ${this.SWITCH_KEY} to change visuals`;
+
 
     start(geon: Geon)
     { 
@@ -31,7 +37,7 @@ export class DelaunayProgram extends Program
         }
 
 
-        if (geon.IsKeyPressed('h'))
+        if (geon.IsKeyPressed(this.SWITCH_KEY))
         {
             this.switch += 1;
             if (this.switch > 2) 

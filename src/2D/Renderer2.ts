@@ -130,6 +130,12 @@ export class Renderer2
         } 
     } 
 
+    text(message: string, pos: Vector2)
+    {
+        this.ctx.font = '14px "Lucida Console", Monaco, monospace';
+        this.ctx.fillText(message, pos.x, pos.y);
+    }
+
     rectangle()
     {
         this.ctx.beginPath();

@@ -10,6 +10,8 @@ export class BounceBallsProgram extends Program
     count = 100;
     speed = 2;
 
+    title = 'bounce_balls';
+
     start(geon: Geon)
     {
         this.points = new Array(this.count);

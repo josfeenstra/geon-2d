@@ -42,6 +42,15 @@ export class SelectorMetaProgram extends MetaProgram
 
     draw(geon: Geon)
     {
+        // draw instructions 
+        if (geon.program != null) 
+            geon.r.text(geon.program.title, new Vector2(10, 20));
+        geon.r.text("tab using [1] - [2]", new Vector2(10, 50));
+        geon.r.text("use left and right mouse button to interact", new Vector2(10, 80));
+        if (geon.program != null) 
+            geon.r.text(geon.program.description, new Vector2(10, 110));
+
+        // draw transitions
         const speed = 0.015;
         if (this.isAnimating)
         {
@@ -64,9 +73,6 @@ export class SelectorMetaProgram extends MetaProgram
                 this.swapProgram(geon);
             }
         }
-
-
-        // draw transitions
     }
 
     prepareSwapProgram(num: number)

@@ -2,6 +2,9 @@ import { Geon } from "../Geon";
 
 export class Program
 {
+    title = "";
+    description = "";
+
     start(geon: Geon)
     {
         //  init geometry 
