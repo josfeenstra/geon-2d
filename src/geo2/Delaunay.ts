@@ -53,6 +53,11 @@ export class Delaunay
         return edges;
     }
 
+    public getCC()
+    {
+        return {cc: this.cc, r: this.cc.map((c, i) => c.disTo(this.pts[this.trs[i][0]]))};
+    }
+
     public calculateCC()
     {
         this.cc = this.trs.map(tr => 
@@ -164,36 +169,48 @@ export class Delaunay
         return -1;
     }
 
-    private makeDelaunay(trIDS: number[], inID:number)
+    private makeDelaunay(trIDS: number[], pID:number)
     {
         // flip until graph is delaunay
         while(trIDS.length > 0)
         {
             let trID = trIDS.pop()!;
             let tr = this.trs[trID];
-            let nbID = this.getNeighborTriangle(trID, inID);
+            let nbID = this.getNeighborTriangle(trID, pID);
             if (nbID == -1) continue;
 
             let qID = this.getNeighborPoint(nbID, trID);
             let q = this.pts[qID];
+            let c = Vector2.fromCircumcenter(this.pts[tr[0]], this.pts[tr[1]], this.pts[tr[2]]);
+            if (c.equals(Vector2.NaN()))
+            {
+                continue;
+            }
             
-            // let c = Vector2.fromCircumcenter(this.pts[tr[0]], this.pts[tr[1]], this.pts[tr[2]]);
-            // if (!c.equals(Vector2.NaN()) && c.disTo(q) < c.disTo(this.pts[tr[0]]))
-            // {
-            //     // flip!
+            let radius = c.disTo(this.pts[tr[0]])
+            if (c.disTo(q) < radius)
+            {
+                // flip!
 
-            //     // points p, q, r and s
-            //     const r = tr[0];
-            //     const s = tr[1];
+                // points p, q, r and s
+                const rID = tr[0];
+                const sID = tr[1];
                 
-            //     // foreign neighbors 
-            //     const fnb_1 = this.getNeighborTriangle(trID, r);
-            //     const fnb_2 = this.getNeighborTriangle(trID, s);
-            //     const fnb_3 = this.getNeighborTriangle(nbID, r);
-            //     const fnb_4 = this.getNeighborTriangle(nbID, s);
+                // foreign neighbors 
+                const fnb_1 = this.getNeighborTriangle(trID, rID);
+                const fnb_2 = this.getNeighborTriangle(trID, sID);
+                const fnb_3 = this.getNeighborTriangle(nbID, rID);
+                const fnb_4 = this.getNeighborTriangle(nbID, sID);
 
+                this.replaceNeighbor(fnb_1, trID, nbID);
+                this.replaceNeighbor(fnb_4, nbID, trID);
 
-            // }
+                this.trs[trID] = [rID, qID, pID, nbID, fnb_2, fnb_4];
+                this.trs[nbID] = [qID, sID, pID, fnb_1, trID, fnb_3];
+
+                trIDS.push(trID);
+                trIDS.push(nbID);
+            }
         }
     }
 
@@ -212,13 +229,19 @@ export class Delaunay
 
     private getNeighborTriangle(triangleID: number, pointID: number) : number
     {
-        let index = this.trs[triangleID].indexOf(pointID) + 3
+        let index = -1;
+        if (this.trs[triangleID][0] == pointID) index = 3;
+        if (this.trs[triangleID][1] == pointID) index = 4;
+        if (this.trs[triangleID][2] == pointID) index = 5;
         return this.trs[triangleID][index];
     }
 
     private getNeighborPoint(triangleID: number, neighborID: number) : number
     {
-        let index = this.trs[triangleID].indexOf(neighborID) - 3
+        let index = -1;
+        if (this.trs[triangleID][3] == neighborID) index = 0;
+        if (this.trs[triangleID][4] == neighborID) index = 1;
+        if (this.trs[triangleID][5] == neighborID) index = 2;
         return this.trs[triangleID][index];
     }
 }

@@ -14,3 +14,5 @@
 - Sort of camera movement       - DONE
 - Swapping of scenes / programs - DONE + with a nice transition :)
 - incorporate voronoi script    - busy...
+- draw text on the screen       - 
+- make usage instructions       - 

@@ -31,6 +31,16 @@ export class Vector2
         )
 	}
 
+    static fromRandomAngle() : Vector2
+    {
+		let alpha = Math.random() * Math.PI * 2;
+		
+        return new Vector2(
+			Math.cos(alpha),
+			Math.sin(alpha)
+        )
+	}
+
 	static from2Pt(from: Vector2, to: Vector2) : Vector2
 	{
 		return new Vector2(
@@ -64,8 +74,12 @@ export class Vector2
         if (d < 0.000001)
 			return Vector2.NaN(); 
 
-        let x = (asum * (b.y - c.y) + bsum * (c.y - a.y) + csum * (a.y - b.y)) / d;
-        let y = (asum * (b.x - c.x) + bsum * (c.x - a.x) + csum * (a.x - b.x)) / d;
+		let x = (asum * (b.y - c.y) + 
+				 bsum * (c.y - a.y) + 
+				 csum * (a.y - b.y)) / d;
+		let y = (asum * (c.x - b.x) + 
+				 bsum * (a.x - c.x) + 
+				 csum * (b.x - a.x)) / d;
 
         return new Vector2(x,y);
     }

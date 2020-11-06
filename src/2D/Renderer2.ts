@@ -8,8 +8,8 @@ import { Vector2 } from "../math/Vector2";
 // do all the camera work in here
 export class Renderer2
 {
-    public offset = Vector2.zero();
-    public scale = 1;
+    public offset: Vector2;
+    public scale: number;
 
     private ctx: CanvasRenderingContext2D;
     private geon: Geon;
@@ -25,9 +25,21 @@ export class Renderer2
     {
         this.geon = geon;
         this.ctx = canvas.getContext("2d")!;
+        this.offset = Vector2.zero();
+        this.scale = 1;
         this.ctx.fillStyle = this.pointcolor;
         this.ctx.strokeStyle = this.linecolor;
     }
+
+    public reset()
+    {
+        this.offset = Vector2.zero();
+        this.scale = 1;
+        this.ctx.fillStyle = this.pointcolor;
+        this.ctx.strokeStyle = this.linecolor;
+    }
+
+    // TODO fix this once i build matrices
 
     private applyOffset(v: Vector2) : Vector2
     {
@@ -105,11 +117,17 @@ export class Renderer2
         this.ctx.stroke();
     }
 
-    circle()
+    circles(points: Vector2[], radii: number[])
     {
-        this.ctx.beginPath();
-        this.ctx.fill();
-        this.ctx.stroke();
+        // TODO dont draw if off screen
+        for (let i = 0; i < points.length; i++)
+        {
+            this.ctx.beginPath();
+            let v = this.applyOffset(points[i]);
+            let r = radii[i] * this.scale;
+            this.ctx.arc(v.x, v.y, r, 0, Math.PI * 2, false);
+            this.ctx.stroke();
+        } 
     } 
 
     rectangle()

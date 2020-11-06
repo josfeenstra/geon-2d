@@ -21,6 +21,7 @@ export class Geon
     private keysPressed: string[] = [];
 
     mouse: Vector2 = Vector2.zero();
+    worldMouse: Vector2 = Vector2.zero();
     mouseLeftDown: boolean = false;
     mouseLeftPressed: boolean = false;
     private mouseLeftPrev: boolean = false;
@@ -81,6 +82,7 @@ export class Geon
 
     public load(game: Program)
     {
+        this.r.reset();
         this.program = game;
         game.start(this);
 
@@ -132,7 +134,7 @@ export class Geon
         {
             // update time
             this.newTime = Date.now();
-            this.tick += (this.newTime - this.oldTime);
+            this.tick = (this.newTime - this.oldTime);
             this.oldTime = this.newTime;
 
             // update mouse
@@ -166,7 +168,8 @@ export class Geon
     private setMousePos(e: MouseEvent)
     {
         // this is a bit messy, BUT, multiply by camera parameters
-        this.mouse = this.r.revertOffset(new Vector2(e.clientX, e.clientY))
+        this.mouse = new Vector2(e.clientX, e.clientY)
+        this.worldMouse = this.r.revertOffset(this.mouse);
     }
 
     private setMouseUp(e: MouseEvent)
