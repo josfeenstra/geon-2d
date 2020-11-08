@@ -140,6 +140,12 @@ export class Vector2
         return this;
     }
 
+	addn(arg0: number, arg1: number): Vector2 {
+		this.x += arg0;
+		this.y += arg1;
+		return this;
+    }
+
     sub(v: Vector2) : Vector2
     {
         this.x -= v.x;

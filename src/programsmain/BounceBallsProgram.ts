@@ -1,5 +1,5 @@
 import { Geon } from "../Geon";
-import { Program } from "./Program";
+import { Program } from "../programs/Program";
 import { Vector2 } from "../math/Vector2";
 
 export class BounceBallsProgram extends Program

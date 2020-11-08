@@ -69,6 +69,8 @@ export class Geon
         canvas.onkeydown = this.onKeyDown.bind(this);
         canvas.onkeypress = this.onKeyPressed.bind(this);
         canvas.onkeyup = this.onKeyUp.bind(this);
+        
+
 
         for(let i = 0; i < 223 ;i++)
         {

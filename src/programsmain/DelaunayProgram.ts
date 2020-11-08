@@ -1,10 +1,10 @@
 import { Geon } from "../Geon";
-import { Program } from "./Program";
+import { Program } from "../programs/Program";
 
 import { Vector2 } from "../math/Vector2";
 import { Line2 } from "../geo2/line2";
 import { Delaunay } from "../geo2/Delaunay";
-import { ProgramHelpers } from "./ProgramHelpers";
+import { ProgramHelpers } from "../programs/ProgramHelpers";
 
 export class DelaunayProgram extends Program
 {

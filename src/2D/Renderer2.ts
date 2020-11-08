@@ -32,6 +32,11 @@ export class Renderer2
         this.ctx.strokeStyle = this.linecolor;
     }
 
+    setColor(color:string)
+    {
+        this.ctx.strokeStyle = color;
+    }
+
     public reset()
     {
         this.slowfade = false;
@@ -76,13 +81,19 @@ export class Renderer2
             this.ctx.clearRect(0, 0, this.geon.width, this.geon.height);
     }
 
+    pointColored(x: number, y: number, color: string)
+    {
+        this.ctx.fillStyle = color;
+        this.point(x, y);
+    }
+
     point(x: number, y: number)
     {
         // todo camera
         // TODO dont draw if off screen
-
         this.ctx.beginPath();
-        this.ctx.arc(x, y, this.pointsize, 0, Math.PI * 2, false);
+        let v = this.applyOffset(new Vector2(x, y));
+        this.ctx.arc(v.x, v.y, this.pointsize, 0, Math.PI * 2, false);
         this.ctx.fill();
     }
 
@@ -127,13 +138,18 @@ export class Renderer2
         // TODO dont draw if off screen
         for (let i = 0; i < points.length; i++)
         {
-            this.ctx.beginPath();
-            let v = this.applyOffset(points[i]);
-            let r = radii[i] * this.scale;
-            this.ctx.arc(v.x, v.y, r, 0, Math.PI * 2, false);
-            this.ctx.stroke();
+            this.circle(points[i], radii[i]);
         } 
     } 
+
+    circle(point: Vector2, radius: number)
+    {
+        this.ctx.beginPath();
+        let v = this.applyOffset(point);
+        let r = radius * this.scale;
+        this.ctx.arc(v.x, v.y, r, 0, Math.PI * 2, false);
+        this.ctx.stroke();
+    }
 
     text(message: string, pos: Vector2)
     {
