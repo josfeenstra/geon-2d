@@ -11,16 +11,20 @@ export class GridProgram extends Program
     title = "grid";
     description = "";
 
-    highlight = Vector2.zero();
-    points: Vector2[] = [];
-    colors: number[] = [];
-    xCount = 0;
-    yCount = 0;
-    d = 0;
+    // params
+    public count = 20;
+
+
+    private highlight = Vector2.zero();
+    private points: Vector2[] = [];
+    private colors: number[] = [];
+    private xCount = 0;
+    private yCount = 0;
+    private d = 0;
 
     start(geon: Geon)
     { 
-        this.create(geon, 6);
+        this.create(geon, this.count);
     }
 
     update(geon: Geon)
@@ -33,19 +37,23 @@ export class GridProgram extends Program
         // points
         const color1 = "#ffffff";
         const color2 = "#222222";
+        const color3 = "#aaaaaa";
         for (let i = 0; i < this.points.length; i++)
         {
             let v = this.points[i];
-            let c = this.colors[i] ? color1 : color2;
+            let c = this.colors[i] ? color3 : color2;
             geon.r.pointColored(v.x, v.y, c);
         }
+
+        // lines 
+        geon.r.setColor("#ffffff");
+        this.drawLines(geon);
 
         // cursor 
         geon.r.setColor(color1);
         geon.r.circle(this.highlight, 10);
 
-        // lines 
-        this.drawLines(geon);
+        geon.r.reset();
     }
 
     exit(geon: Geon)
@@ -124,7 +132,7 @@ export class GridProgram extends Program
                     this.getColor(x+1, y+1)
                 )
                 this.drawCell(geon, corner, state)
-                geon.r.text(state.toString(), corner.addn(this.d/2, this.d/2));
+                // geon.r.text(state.toString(), corner.addn(this.d/2, this.d/2));
             }
         }
         return null;
