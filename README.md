@@ -1,5 +1,5 @@
 # geon
-a '2D graphics engine' build around the html5 canvas. : https://josfeenstra.nl/demo/
+a '2D graphics engine' build around the html5 canvas. : https://josfeenstra.nl/project/neon/
 
 # screenshots
 
